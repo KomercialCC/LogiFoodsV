@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGI FOODS | Intelligence Report - Dolores Premium · Fase IV Cadenas Retail 2026</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --k-blue-deep: #0f172a;
+            --k-blue-americas: #1e40af;
+            --k-blue-poblado: #60a5fa;
+            --k-cyan: #22d3ee;
+            --k-white: #ffffff;
+            --k-gray: #64748b;
+            --k-border: #e2e8f0;
+            --k-green: #059669;
+            --k-green-light: #34d399;
+            --k-amber: #f59e0b;
+            --k-red: #ef4444;
+            --k-purple: #7c3aed;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: var(--k-blue-deep);
+            margin: 0; padding: 0; overflow-x: hidden;
+        }
+
+        .hero {
+            height: 480px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 64, 175, 0.75) 100%),
+                        url('https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=1600&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            border-bottom: 4px solid var(--k-cyan);
+        }
+        .hero h1 { font-size: 5.5rem; font-weight: 800; margin: 0; letter-spacing: -3px; }
+        .hero p { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 12px; margin-top: 25px; font-weight: 600; color: var(--k-cyan); }
+        .hero .hero-badges { display: flex; gap: 15px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+        .hero-badge { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 6px 18px; border-radius: 30px; font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+
+        .container { max-width: 1350px; margin: -80px auto 0; padding: 0 20px; }
+
+        .research-grid {
+            background: var(--k-white); padding: 50px; border-radius: 35px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.08); margin-bottom: 45px;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; border: 1px solid var(--k-border);
+        }
+        .res-item { display: flex; gap: 25px; }
+        .res-item i { font-size: 1.8rem; color: var(--k-blue-americas); background: #f0f7ff; padding: 20px; border-radius: 18px; flex-shrink: 0; }
+        .res-item h4 { margin: 0 0 10px; color: var(--k-blue-deep); text-transform: uppercase; font-size: 0.95rem; font-weight: 800; }
+        .res-item p { margin: 0; font-size: 0.95rem; line-height: 1.7; color: var(--k-gray); }
+
+        .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 25px; }
+        .kpi-card { background: var(--k-white); padding: 35px; border-radius: 25px; border: 1px solid var(--k-border); text-align: center; transition: 0.3s; }
+        .kpi-card:hover { transform: translateY(-5px); border-color: var(--k-blue-americas); }
+        .kpi-card i { font-size: 1.5rem; color: var(--k-blue-americas); margin-bottom: 15px; }
+        .kpi-card h3 { font-size: 2.8rem; margin: 5px 0; color: var(--k-blue-americas); font-weight: 800; }
+        .kpi-card p { font-size: 0.8rem; font-weight: 800; color: var(--k-gray); text-transform: uppercase; letter-spacing: 2px; }
+        .kpi-reason { font-size: 0.85rem; color: var(--k-gray); margin-top: 10px; font-style: italic; border-top: 1px solid var(--k-border); padding-top: 10px; }
+        .kpi-card.highlight h3 { color: var(--k-green); }
+        .kpi-card.highlight:hover { border-color: var(--k-green); }
+        .kpi-card.highlight i { color: var(--k-green); }
+        .kpi-card.new-city h3 { color: var(--k-purple); }
+        .kpi-card.new-city i { color: var(--k-purple); }
+
+        .city-banner { display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px; margin-bottom: 45px; }
+        .city-card { padding: 25px 20px; border-radius: 25px; text-align: center; color: white; }
+        .city-card h3 { font-size: 2.2rem; font-weight: 800; margin: 8px 0; }
+        .city-card p { font-size: 0.75rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; opacity: 0.85; margin: 0; }
+        .city-card span { font-size: 0.82rem; opacity: 0.75; display: block; margin-top: 8px; }
+        .cc-medellin { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+        .cc-cali { background: linear-gradient(135deg, #059669, #10b981); }
+        .cc-pereira { background: linear-gradient(135deg, #d97706, #f59e0b); }
+        .cc-bucaramanga { background: linear-gradient(135deg, #dc2626, #ef4444); }
+        .cc-barranquilla { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
+        .cc-bogota { background: linear-gradient(135deg, #0e7490, #22d3ee); }
+        .new-badge { background: rgba(255,255,255,0.25); border-radius: 12px; padding: 2px 8px; font-size: 0.65rem; font-weight: 900; letter-spacing: 1px; margin-top: 5px; display: inline-block; }
+
+        .chart-box { background: var(--k-white); padding: 40px; border-radius: 30px; border: 1px solid var(--k-border); width: 100%; box-sizing: border-box; margin-bottom: 45px; }
+        .chart-box h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 25px; color: var(--k-blue-deep); }
+        .chart-container { height: 450px; width: 100%; position: relative; }
+        .chart-split { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 45px; }
+        .chart-split .chart-box { margin-bottom: 0; }
+
+        .table-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 45px; }
+        .table-container { background: white; padding: 30px; border-radius: 25px; border: 1px solid var(--k-border); }
+        .table-container h3 { font-size: 1.1rem; font-weight: 800; margin: 0 0 20px; }
+        .table-data { width: 100%; border-collapse: collapse; }
+        .table-data th { text-align: left; padding: 12px; color: var(--k-blue-americas); border-bottom: 2px solid var(--k-border); font-size: 0.85rem; }
+        .table-data td { padding: 12px; border-bottom: 1px solid var(--k-border); font-size: 0.9rem; font-weight: 600; }
+        .table-data .hero-row td { color: var(--k-blue-americas); font-weight: 800; }
+        .table-data .total-row td { background: #f8fafc; font-weight: 800; border-top: 2px solid var(--k-border); }
+        .table-tag { display: inline-block; padding: 3px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; margin-left: 8px; }
+        .tag-medellin { background: #e0e7ff; color: var(--k-blue-americas); }
+        .tag-cali { background: #d1fae5; color: var(--k-green); }
+        .tag-pereira { background: #fef3c7; color: #92400e; }
+        .tag-bga { background: #fee2e2; color: #991b1b; }
+        .tag-barranquilla { background: #ede9fe; color: #5b21b6; }
+        .tag-bogota { background: #cffafe; color: #0e7490; }
+
+        .section-title { font-size: 2.2rem; font-weight: 900; margin: 60px 0 40px; text-align: left; border-bottom: 4px solid var(--k-blue-americas); display: inline-block; }
+
+        .insight-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-bottom: 60px; }
+        .insight-card { background: var(--k-white); padding: 35px; border-radius: 25px; display: flex; gap: 20px; border-left: 6px solid var(--k-blue-americas); box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
+        .insight-card.green { border-left-color: var(--k-green); }
+        .insight-card.amber { border-left-color: var(--k-amber); }
+        .insight-card.red { border-left-color: var(--k-red); }
+        .insight-card.purple { border-left-color: var(--k-purple); }
+        .insight-card.green i { color: var(--k-green); }
+        .insight-card.amber i { color: var(--k-amber); }
+        .insight-card.red i { color: var(--k-red); }
+        .insight-card.purple i { color: var(--k-purple); }
+        .insight-card i { color: var(--k-blue-americas); font-size: 1.2rem; flex-shrink: 0; }
+        .insight-card h5 { margin: 0 0 12px; font-size: 1.15rem; color: var(--k-blue-deep); font-weight: 800; }
+        .insight-card p { margin: 0; font-size: 0.95rem; color: var(--k-gray); line-height: 1.7; }
+
+        .survey-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 45px; }
+        .survey-card { background: var(--k-white); border-radius: 25px; padding: 30px; border: 1px solid var(--k-border); text-align: center; }
+        .survey-card h4 { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--k-gray); margin: 0 0 15px; }
+        .survey-card .score { font-size: 3.5rem; font-weight: 900; color: var(--k-green); line-height: 1; }
+        .survey-card .score-label { font-size: 0.85rem; color: var(--k-gray); margin-top: 8px; }
+        .bar-mini { display: flex; align-items: center; gap: 10px; margin-top: 6px; font-size: 0.8rem; }
+        .bar-fill { height: 8px; border-radius: 4px; background: var(--k-blue-americas); }
+        .bar-label { min-width: 20px; font-weight: 800; color: var(--k-blue-deep); }
+
+        .strategy-box { background: var(--k-blue-deep); color: white; padding: 80px 60px; border-radius: 45px; margin-bottom: 60px; }
+        .strat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+        .strat-item h6 { color: var(--k-cyan); font-size: 1.1rem; margin: 0 0 15px; text-transform: uppercase; font-weight: 800; }
+        .strat-item p { font-size: 0.95rem; opacity: 0.85; line-height: 1.7; margin: 0; }
+
+        .full-footer { background: var(--k-blue-deep); color: white; padding: 120px 0; margin-top: 100px; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; }
+        .footer-content { max-width: 1300px; margin: auto; padding: 0 25px; text-align: center; }
+        .footer-logo { font-size: 3.5rem; font-weight: 900; color: white; margin-bottom: 30px; }
+        .footer-services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; margin: 80px 0; }
+        .f-service i { font-size: 3rem; color: var(--k-cyan); margin-bottom: 25px; }
+        .f-service h4 { font-size: 1.5rem; margin-bottom: 15px; font-weight: 800; }
+        .f-service p { font-size: 1rem; opacity: 0.7; line-height: 1.7; }
+        .final-phrase { font-size: 1.5rem; font-weight: 400; font-style: italic; color: #ffffff; margin-top: 60px; max-width: 900px; margin-left: auto; margin-right: auto; line-height: 1.4; opacity: 0.9; }
+    
+        .city-banner { grid-template-columns: repeat(4, 1fr); }
+        .cc-cartagena { background: linear-gradient(135deg, #be185d, #f472b6); }
+        .tag-cartagena { background: #fce7f3; color: #9d174d; }
+        .tag-olimpica { background: #fee2e2; color: #991b1b; }
+        .note-box { background: #fffbeb; border: 1px solid #fde68a; border-left: 6px solid var(--k-amber); border-radius: 20px; padding: 26px 30px; margin-bottom: 45px; font-size: 0.92rem; line-height: 1.7; color: #78350f; }
+        .note-box h5 { margin: 0 0 8px; font-size: 1rem; font-weight: 800; color: #92400e; }
+        .note-box ul { margin: 8px 0 0 18px; padding: 0; }
+        .nd { color: var(--k-gray); font-weight: 600; font-style: italic; }
+        @media (max-width: 1000px) {
+            .hero h1 { font-size: 3rem; letter-spacing: -1px; } .hero p { letter-spacing: 4px; font-size: .85rem; }
+            .research-grid, .kpi-row, .chart-split, .table-wrapper, .insight-grid, .survey-grid, .strat-grid, .footer-services { grid-template-columns: 1fr; }
+            .city-banner { grid-template-columns: repeat(2, 1fr); }
+            .strategy-box { padding: 40px 25px; } .section-title { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+<header class="hero"><div>
+<h1>LOGI FOODS</h1>
+<p>Expert Intelligence &amp; Strategic Roadmap 2026 — Fase IV Cadenas Retail</p>
+<div class="hero-badges">
+<span class="hero-badge">Nuevo Canal: Supermercados</span>
+<span class="hero-badge">4 Ciudades</span>
+<span class="hero-badge">19 Puntos con Venta</span>
+<span class="hero-badge">23 oct – 07 nov · 2026</span>
+<span class="hero-badge">+Cartagena NEW</span>
+</div></div></header>
+<div class="container">
+
+<div class="research-grid"><div class="res-item"><i class="fas fa-search-location"></i><div><h4>Diagnóstico de la Fase IV: Salto de PriceSmart a 4 Cadenas Retail</h4><p>El Road Show Dolores Premium abre un nuevo frente comercial: de las plazas PriceSmart a cadenas de supermercado (Olímpica, Éxito, Carulla y Euro). Entre el 23-oct y el 07-nov se registraron 29 visitas con venta en 19 puntos de 4 ciudades (22 puntos visitados en total), con 166 unidades y $6.58M de revenue estimado sobre los 4 SKUs con precio base. Es un arranque de 11 días operativos, por lo que las lecturas son direccionales.</p></div></div><div class="res-item"><i class="fas fa-chart-line"></i><div><h4>Medellín Lidera el Arranque con $2.89M (43.9%)</h4><p>Medellín concentra 79 unidades en 7 plazas y 12 visitas (6.6 und/visita). Barranquilla le sigue con 54 unidades y $2.12M operando solo 6 plazas, todas de la cadena Olímpica, con 6.0 und/visita. Bogotá (20 und, 4.0 und/visita) y Cartagena (13 und, 4.3 und/visita) aún están en fase de siembra.</p></div></div><div class="res-item"><i class="fas fa-star"></i><div><h4>9.0/10 de Satisfacción con 151 Encuestas, pero Cartagena Alerta</h4><p>103 de 151 consumidores (68.2%) calificaron 10/10 y el 82.1% dio 9 o 10. La percepción de precio promedia 4.76/5 y la de calidad 4.68/5. La excepción es Cartagena (Carulla Castillo Grande): satisfacción 6.73/10 con 15 encuestas, muy por debajo de Barranquilla (9.79) y Bogotá (9.76).</p></div></div><div class="res-item"><i class="fas fa-trophy"></i><div><h4>Hamburguesa y Sashimi Explican el 75.3% del Volumen</h4><p>La Hamburguesa suma 68 unidades (41.0%) y $4.01M (60.9% del revenue). El Sashimi sube a 57 unidades (34.3%), muy por encima del 15% que tenía en Fase III, mientras los Cubitos caen a solo 5 unidades: no por demanda, sino porque solo estaban en inventario en 2 plazas (Carulla Castillo Grande, Euro Llanogrande).</p></div></div></div>
+
+<div class="city-banner"><div class="city-card cc-medellin"><p>Medellín</p><h3>79</h3><span>7 plazas · $2.89M</span></div><div class="city-card cc-barranquilla"><p>Barranquilla</p><h3>54</h3><span>6 plazas · $2.12M</span></div><div class="city-card cc-bogota"><p>Bogotá</p><h3>20</h3><span>5 plazas · $0.89M</span></div><div class="city-card cc-cartagena"><p>Cartagena</p><h3>13</h3><span>1 plazas · $0.68M</span><span class="new-badge"><i class="fas fa-star"></i> NUEVA CIUDAD</span></div></div>
+
+<div class="kpi-row">
+<div class="kpi-card highlight"><i class="fas fa-cash-register"></i><p>Valor Vendido Estimado*</p><h3>$6.6M</h3><div class="kpi-reason">Revenue de los 4 SKUs con precio base (145 und). Las 21 unidades de los 4 SKUs nuevos no tienen precio en la data y no están valorizadas.</div></div>
+<div class="kpi-card"><i class="fas fa-boxes"></i><p>Unidades Totales</p><h3>166</h3><div class="kpi-reason">29 visitas con venta en 11 días operativos (23-oct – 07-nov). Promedio de 5.7 unidades por visita.</div></div>
+<div class="kpi-card"><i class="fas fa-receipt"></i><p>Ticket Unitario Promedio*</p><h3>$45.4K</h3><div class="kpi-reason">Valor promedio por unidad vendida de los 4 SKUs con precio. Fase III cerró en $42.6K: la Hamburguesa pesa más en el valor (60.9%).</div></div>
+</div>
+<div class="kpi-row">
+<div class="kpi-card highlight"><i class="fas fa-city"></i><p>Ciudades Activas</p><h3>4</h3><div class="kpi-reason">Medellín, Barranquilla, Bogotá y Cartagena. Cartagena es ciudad nueva frente a las 6 de la Fase III.</div></div>
+<div class="kpi-card"><i class="fas fa-store"></i><p>Puntos con Venta</p><h3>19</h3><div class="kpi-reason">22 puntos visitados según registro de ingreso; 3 sin venta registrada (Carulla Oviedo, Euro Frontera, SAO 432 Portal De La 80).</div></div>
+<div class="kpi-card new-city"><i class="fas fa-poll"></i><p>Encuestas Efectivas</p><h3>151</h3><div class="kpi-reason">Satisfacción promedio 9.03/10 y 68.2% de calificaciones 10/10 en 19 puntos.</div></div>
+</div>
+
+<div class="note-box"><h5><i class="fas fa-info-circle"></i> Nota metodológica</h5>
+Periodo: datos desde octubre 2026 de la hoja <b>Data Logifoods.xlsx</b> (Ventas 29 registros, Encuesta 151, Ingreso/Salida 31 visitas). Revenue estimado = unidades × precio de lista usado en la Fase III (Hamburguesa $58,900 · Filetes $49,900 · Sashimi $29,900 · Cubitos $23,900).
+<ul><li>Fajitas, Carnitas, Palomitas y Langostinos <b>no tienen precio en la data</b>: se muestran en unidades (n/d en pesos).</li>
+<li>El registro del 23-oct de SAO 093 Cr 46 es una carga manual (sin ingreso de asesora) y se incluye en las cifras.</li></ul></div>
+
+<h2 class="section-title">Análisis Comparativo por Plaza (Sell-Out Total)</h2>
+<div class="chart-box"><div class="chart-container" style="height:720px;"><canvas id="plazaChart"></canvas></div></div>
+
+<div class="chart-split">
+<div class="chart-box"><h2>Sell-Out por Ciudad (Composición de SKUs)</h2><div class="chart-container" style="height:380px;"><canvas id="cityStackedChart"></canvas></div></div>
+<div class="chart-box"><h2>Distribución de Unidades por SKU (Share Nacional)</h2><div class="chart-container" style="height:380px;"><canvas id="doughnutChart"></canvas></div></div>
+</div>
+
+<div class="chart-split">
+<div class="chart-box"><h2>Evolución Diaria: Unidades y Visitas con Venta</h2><div class="chart-container" style="height:360px;"><canvas id="dailyChart"></canvas></div></div>
+<div class="chart-box"><h2>Ventas por Día de la Semana</h2><div class="chart-container" style="height:360px;"><canvas id="weekdayChart"></canvas></div></div>
+</div>
+
+<div class="chart-split">
+<div class="chart-box"><h2>Atributos de Valor Percibidos (Encuestas · n=151)</h2><div class="chart-container" style="height:350px;"><canvas id="radarChart"></canvas></div></div>
+<div class="chart-box"><h2>Participación de Plazas en el Sell-Out Total</h2><div class="chart-container" style="height:560px;"><canvas id="plazaShareChart"></canvas></div></div>
+</div>
+
+<div class="chart-box"><h2>Revenue Estimado por Ciudad (COP · 4 SKUs con precio)</h2><div class="chart-container" style="height:380px;"><canvas id="revenueChart"></canvas></div></div>
+
+<h2 class="section-title">Detalle de Ventas por Plaza</h2>
+<div class="table-wrapper"><div class="table-container"><h3>Éxito Laureles <span class="table-tag tag-medellin">Medellín</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Éxito</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Sashimi Corte Grueso</td><td>12</td><td>$358,800</td></tr><tr><td>Filetes con Ajonjolí</td><td>6</td><td>$299,400</td></tr><tr><td>Hamburguesa Aleta Amarilla</td><td>6</td><td>$353,400</td></tr><tr><td>Palomitas de Atún</td><td>3</td><td><span class="nd">n/d</span></td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (3 días)</strong></td><td><strong>27</strong></td><td><strong>$1,011,600</strong></td></tr></tbody></table></div><div class="table-container"><h3>Éxito Envigado <span class="table-tag tag-medellin">Medellín</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Éxito</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Sashimi Corte Grueso</td><td>8</td><td>$239,200</td></tr><tr><td>Palomitas de Atún</td><td>5</td><td><span class="nd">n/d</span></td></tr><tr><td>Filetes con Ajonjolí</td><td>3</td><td>$149,700</td></tr><tr><td>Hamburguesa Aleta Amarilla</td><td>2</td><td>$117,800</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (2 días)</strong></td><td><strong>18</strong></td><td><strong>$506,700</strong></td></tr></tbody></table></div></div><div class="table-wrapper"><div class="table-container"><h3>STO 340 San Lucas <span class="table-tag tag-medellin">Medellín</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Olímpica</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Hamburguesa Aleta Amarilla</td><td>8</td><td>$471,200</td></tr><tr><td>Carnitas de Atún</td><td>3</td><td><span class="nd">n/d</span></td></tr><tr><td>Sashimi Corte Grueso</td><td>0</td><td>$0</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Filetes con Ajonjolí</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (2 días)</strong></td><td><strong>11</strong></td><td><strong>$471,200</strong></td></tr></tbody></table></div><div class="table-container"><h3>Euro Llanogrande <span class="table-tag tag-medellin">Medellín</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Euro</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Hamburguesa Aleta Amarilla</td><td>4</td><td>$235,600</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>3</td><td>$71,700</td></tr><tr><td>Langostinos Finas Hierbas</td><td>3</td><td><span class="nd">n/d</span></td></tr><tr><td>Sashimi Corte Grueso</td><td>0</td><td>$0</td></tr><tr><td>Filetes con Ajonjolí</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (2 días)</strong></td><td><strong>10</strong></td><td><strong>$307,300</strong></td></tr></tbody></table></div></div><div class="table-wrapper"><div class="table-container"><h3>Carulla Tesoro <span class="table-tag tag-medellin">Medellín</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Carulla</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Hamburguesa Aleta Amarilla</td><td>5</td><td>$294,500</td></tr><tr><td>Sashimi Corte Grueso</td><td>0</td><td>$0</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Filetes con Ajonjolí</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (1 día)</strong></td><td><strong>5</strong></td><td><strong>$294,500</strong></td></tr></tbody></table></div><div class="table-container"><h3>Euro Salomon <span class="table-tag tag-medellin">Medellín</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Euro</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Sashimi Corte Grueso</td><td>6</td><td>$179,400</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Filetes con Ajonjolí</td><td>0</td><td>$0</td></tr><tr><td>Hamburguesa Aleta Amarilla</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (1 día)</strong></td><td><strong>6</strong></td><td><strong>$179,400</strong></td></tr></tbody></table></div></div><div class="table-wrapper"><div class="table-container"><h3>Carulla Palmas <span class="table-tag tag-medellin">Medellín</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Carulla</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Hamburguesa Aleta Amarilla</td><td>2</td><td>$117,800</td></tr><tr><td>Sashimi Corte Grueso</td><td>0</td><td>$0</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Filetes con Ajonjolí</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (1 día)</strong></td><td><strong>2</strong></td><td><strong>$117,800</strong></td></tr></tbody></table></div><div class="table-container"><h3>SAO 093 Cr 46 <span class="table-tag tag-barranquilla">Barranquilla</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Olímpica</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Hamburguesa Aleta Amarilla</td><td>19</td><td>$1,119,100</td></tr><tr><td>Sashimi Corte Grueso</td><td>2</td><td>$59,800</td></tr><tr><td>Fajitas de Atún</td><td>2</td><td><span class="nd">n/d</span></td></tr><tr><td>Palomitas de Atún</td><td>1</td><td><span class="nd">n/d</span></td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Filetes con Ajonjolí</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (3 días)</strong></td><td><strong>24</strong></td><td><strong>$1,178,900</strong></td></tr></tbody></table></div></div><div class="table-wrapper"><div class="table-container"><h3>STO 059 Golf <span class="table-tag tag-barranquilla">Barranquilla</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Olímpica</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Sashimi Corte Grueso</td><td>5</td><td>$149,500</td></tr><tr><td>Hamburguesa Aleta Amarilla</td><td>2</td><td>$117,800</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Filetes con Ajonjolí</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (1 día)</strong></td><td><strong>7</strong></td><td><strong>$267,300</strong></td></tr></tbody></table></div><div class="table-container"><h3>STO 076 Prado Alto <span class="table-tag tag-barranquilla">Barranquilla</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Olímpica</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Sashimi Corte Grueso</td><td>7</td><td>$209,300</td></tr><tr><td>Filetes con Ajonjolí</td><td>1</td><td>$49,900</td></tr><tr><td>Langostinos Finas Hierbas</td><td>1</td><td><span class="nd">n/d</span></td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Hamburguesa Aleta Amarilla</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (2 días)</strong></td><td><strong>9</strong></td><td><strong>$259,200</strong></td></tr></tbody></table></div></div><div class="table-wrapper"><div class="table-container"><h3>STO 043 Miramar <span class="table-tag tag-barranquilla">Barranquilla</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Olímpica</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Sashimi Corte Grueso</td><td>4</td><td>$119,600</td></tr><tr><td>Filetes con Ajonjolí</td><td>1</td><td>$49,900</td></tr><tr><td>Langostinos Finas Hierbas</td><td>1</td><td><span class="nd">n/d</span></td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Hamburguesa Aleta Amarilla</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (1 día)</strong></td><td><strong>6</strong></td><td><strong>$169,500</strong></td></tr></tbody></table></div><div class="table-container"><h3>STO 100 Villa Santos <span class="table-tag tag-barranquilla">Barranquilla</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Olímpica</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Sashimi Corte Grueso</td><td>2</td><td>$59,800</td></tr><tr><td>Filetes con Ajonjolí</td><td>2</td><td>$99,800</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Hamburguesa Aleta Amarilla</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (1 día)</strong></td><td><strong>4</strong></td><td><strong>$159,600</strong></td></tr></tbody></table></div></div><div class="table-wrapper"><div class="table-container"><h3>STO 054 Villa Campestre Cl 3 <span class="table-tag tag-barranquilla">Barranquilla</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Olímpica</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Sashimi Corte Grueso</td><td>3</td><td>$89,700</td></tr><tr><td>Langostinos Finas Hierbas</td><td>1</td><td><span class="nd">n/d</span></td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Filetes con Ajonjolí</td><td>0</td><td>$0</td></tr><tr><td>Hamburguesa Aleta Amarilla</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (1 día)</strong></td><td><strong>4</strong></td><td><strong>$89,700</strong></td></tr></tbody></table></div><div class="table-container"><h3>Carulla Country <span class="table-tag tag-bogota">Bogotá</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Carulla</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Hamburguesa Aleta Amarilla</td><td>4</td><td>$235,600</td></tr><tr><td>Sashimi Corte Grueso</td><td>2</td><td>$59,800</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Filetes con Ajonjolí</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (1 día)</strong></td><td><strong>6</strong></td><td><strong>$295,400</strong></td></tr></tbody></table></div></div><div class="table-wrapper"><div class="table-container"><h3>Éxito La Colina <span class="table-tag tag-bogota">Bogotá</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Éxito</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Hamburguesa Aleta Amarilla</td><td>4</td><td>$235,600</td></tr><tr><td>Sashimi Corte Grueso</td><td>0</td><td>$0</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Filetes con Ajonjolí</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (1 día)</strong></td><td><strong>4</strong></td><td><strong>$235,600</strong></td></tr></tbody></table></div><div class="table-container"><h3>Carulla Alhambra <span class="table-tag tag-bogota">Bogotá</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Carulla</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Hamburguesa Aleta Amarilla</td><td>3</td><td>$176,700</td></tr><tr><td>Sashimi Corte Grueso</td><td>0</td><td>$0</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Filetes con Ajonjolí</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (1 día)</strong></td><td><strong>3</strong></td><td><strong>$176,700</strong></td></tr></tbody></table></div></div><div class="table-wrapper"><div class="table-container"><h3>SAO 405 Plaza De Las Americas <span class="table-tag tag-bogota">Bogotá</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Olímpica</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Sashimi Corte Grueso</td><td>4</td><td>$119,600</td></tr><tr><td>Fajitas de Atún</td><td>1</td><td><span class="nd">n/d</span></td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Filetes con Ajonjolí</td><td>0</td><td>$0</td></tr><tr><td>Hamburguesa Aleta Amarilla</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (1 día)</strong></td><td><strong>5</strong></td><td><strong>$119,600</strong></td></tr></tbody></table></div><div class="table-container"><h3>Carulla El Retiro (CAF) <span class="table-tag tag-bogota">Bogotá</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Carulla</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Sashimi Corte Grueso</td><td>2</td><td>$59,800</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>0</td><td>$0</td></tr><tr><td>Filetes con Ajonjolí</td><td>0</td><td>$0</td></tr><tr><td>Hamburguesa Aleta Amarilla</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (1 día)</strong></td><td><strong>2</strong></td><td><strong>$59,800</strong></td></tr></tbody></table></div></div><div class="table-wrapper" style="grid-template-columns: 1fr;"><div class="table-container"><h3>Carulla Castillo Grande <span class="table-tag tag-cartagena">Cartagena</span> <span class="table-tag tag-olimpica" style="background:#f1f5f9;color:#475569;">Carulla</span></h3>
+<table class="table-data"><thead><tr><th>Referencia</th><th>Unidades</th><th>Ingresos Est.</th></tr></thead><tbody><tr class="hero-row"><td>Hamburguesa Aleta Amarilla</td><td>9</td><td>$530,100</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>2</td><td>$47,800</td></tr><tr><td>Filetes con Ajonjolí</td><td>2</td><td>$99,800</td></tr><tr><td>Sashimi Corte Grueso</td><td>0</td><td>$0</td></tr>
+<tr class="total-row"><td><strong>TOTAL PLAZA (3 días)</strong></td><td><strong>13</strong></td><td><strong>$677,700</strong></td></tr></tbody></table></div></div>
+
+<div class="table-wrapper" style="grid-template-columns: 1fr;"><div class="table-container">
+<h3>Ranking SKU Nacional — Todas las Plazas</h3>
+<table class="table-data"><thead><tr><th>SKU</th><th>Unidades</th><th>Share Und</th><th>Revenue Est.</th><th>Share Rev</th></tr></thead><tbody>
+<tr class="hero-row"><td><i class="fas fa-medal" style="color:#f59e0b;"></i> Hamburguesa Aleta Amarilla</td><td>68</td><td>41.0%</td><td>$4.01M</td><td>60.9%</td></tr><tr><td><i class="fas fa-medal" style="color:#94a3b8;"></i> Sashimi Corte Grueso</td><td>57</td><td>34.3%</td><td>$1.70M</td><td>25.9%</td></tr><tr><td><i class="fas fa-medal" style="color:#c2855a;"></i> Filetes con Ajonjolí</td><td>15</td><td>9.0%</td><td>$0.75M</td><td>11.4%</td></tr><tr><td>Palomitas de Atún</td><td>9</td><td>5.4%</td><td><span class="nd">n/d</span></td><td>—</td></tr><tr><td>Langostinos Finas Hierbas</td><td>6</td><td>3.6%</td><td><span class="nd">n/d</span></td><td>—</td></tr><tr><td>Cubitos Aleta Amarilla</td><td>5</td><td>3.0%</td><td>$0.12M</td><td>1.8%</td></tr><tr><td>Fajitas de Atún</td><td>3</td><td>1.8%</td><td><span class="nd">n/d</span></td><td>—</td></tr><tr><td>Carnitas de Atún</td><td>3</td><td>1.8%</td><td><span class="nd">n/d</span></td><td>—</td></tr>
+<tr class="total-row"><td><strong>TOTAL</strong></td><td><strong>166</strong></td><td><strong>100%</strong></td><td><strong>$6.58M*</strong></td><td><strong>100%</strong></td></tr></tbody></table>
+<p style="font-size:.8rem;color:var(--k-gray);margin:12px 0 0;">*Revenue y share de revenue calculados sobre los 4 SKUs con precio (145 und). Los 4 SKUs nuevos no tienen precio en la data.</p>
+</div></div>
+
+<div class="table-wrapper"><div class="table-container">
+<h3>Ranking por Cadena</h3>
+<table class="table-data"><thead><tr><th>Cadena</th><th>Plazas</th><th>Und</th><th>Revenue Est.</th><th>Share</th></tr></thead><tbody><tr><td>Olímpica</td><td>8</td><td>70</td><td>$2,715,000</td><td>41.3%</td></tr><tr><td>Éxito</td><td>3</td><td>49</td><td>$1,753,900</td><td>26.7%</td></tr><tr><td>Carulla</td><td>6</td><td>31</td><td>$1,621,900</td><td>24.7%</td></tr><tr><td>Euro</td><td>2</td><td>16</td><td>$486,700</td><td>7.4%</td></tr></tbody></table></div>
+<div class="table-container"><h3>Satisfacción por Ciudad</h3>
+<table class="table-data"><thead><tr><th>Ciudad</th><th>n</th><th>Satisf.</th><th>Calidad</th><th>Precio</th></tr></thead><tbody><tr><td>Barranquilla</td><td>39</td><td>9.79</td><td>4.72</td><td>5.00</td></tr><tr><td>Bogotá</td><td>17</td><td>9.76</td><td>4.94</td><td>4.94</td></tr><tr><td>Medellín</td><td>80</td><td>8.94</td><td>4.76</td><td>4.74</td></tr><tr><td>Cartagena</td><td>15</td><td>6.73</td><td>3.87</td><td>4.07</td></tr></tbody></table></div></div>
+
+<h2 class="section-title">Análisis de Encuestas de Satisfacción (n=151)</h2>
+<div class="survey-grid">
+<div class="survey-card"><h4>Satisfacción General</h4><div class="score">9.0/10</div><div class="score-label">Promedio · 151 respuestas</div><div style="margin-top:15px;"><div class="bar-mini"><div class="bar-fill" style="width:68%;background:#059669;"></div><span class="bar-label">10 → 68%</span></div><div class="bar-mini"><div class="bar-fill" style="width:18%;background:#1e40af;"></div><span class="bar-label">8-9 → 18%</span></div><div class="bar-mini"><div class="bar-fill" style="width:14%;background:#60a5fa;"></div><span class="bar-label">≤7 → 14%</span></div></div></div>
+<div class="survey-card"><h4>Calidad del Producto</h4><div class="score">4.7/5</div><div class="score-label">Escala 1–5 · 151 respuestas</div><div style="margin-top:15px;"><div class="bar-mini"><div class="bar-fill" style="width:84%;background:#059669;"></div><span class="bar-label">5★ → 84%</span></div><div class="bar-mini"><div class="bar-fill" style="width:6%;background:#1e40af;"></div><span class="bar-label">4★ → 6%</span></div><div class="bar-mini"><div class="bar-fill" style="width:10%;background:#60a5fa;"></div><span class="bar-label">≤3★ → 10%</span></div></div></div>
+<div class="survey-card"><h4>Percepción de Precio</h4><div class="score">4.8/5</div><div class="score-label">Escala 1–5 · 151 respuestas</div><div style="margin-top:15px;"><div class="bar-mini"><div class="bar-fill" style="width:86%;background:#059669;"></div><span class="bar-label">5★ → 86%</span></div><div class="bar-mini"><div class="bar-fill" style="width:7%;background:#1e40af;"></div><span class="bar-label">4★ → 7%</span></div><div class="bar-mini"><div class="bar-fill" style="width:7%;background:#60a5fa;"></div><span class="bar-label">≤3★ → 7%</span></div></div></div>
+</div>
+
+<div class="chart-split">
+<div class="chart-box"><h2>Motivos de Recomendación (Encuestas)</h2><div class="chart-container" style="height:320px;"><canvas id="motivoChart"></canvas></div></div>
+<div class="chart-box"><h2>¿Qué Dicen los Consumidores? — Temas en Comentarios Abiertos</h2><div class="chart-container" style="height:320px;"><canvas id="mejoraChart"></canvas></div></div>
+</div>
+
+<h2 class="section-title">Insights Estratégicos — Fase IV Cadenas Retail (19 Puntos · 4 Ciudades)</h2>
+<div class="insight-grid"><div class="insight-card green"><i class="fas fa-crown"></i><div><h5>1. $6.58M y 166 Unidades en 11 Días: Arranque en Cadenas Retail</h5><p>El nuevo frente de cadenas deja 29 visitas con venta y 5.7 und/visita. El revenue estimado ($6.58M) corresponde solo a los 4 SKUs con precio; las 21 unidades de Fajitas, Carnitas, Palomitas y Langostinos (12.7% del volumen) se suman en unidades pero no en pesos. Con 3-4 días reales de sell-out por semana el dato aún es de siembra, no de régimen.</p></div></div><div class="insight-card purple"><i class="fas fa-map-marker-alt"></i><div><h5>2. Medellín y Barranquilla: 76.2% del Revenue</h5><p>Medellín ($2.89M, 43.9%) y Barranquilla ($2.12M, 32.3%) dominan el arranque. Barranquilla logra su volumen con 6 plazas Olímpica y 9 visitas (6.0 und/visita). Bogotá ($0.89M, 13.5%) y Cartagena ($0.68M, 10.3%) quedan rezagadas por menor número de visitas y menor tracción por visita.</p></div></div><div class="insight-card "><i class="fas fa-fire"></i><div><h5>3. SAO 093 Cr 46: la Mejor Plaza con $1.18M</h5><p>SAO 093 Cr 46 (Barranquilla, Olímpica) genera 24 unidades y $1,178,900 en 3 visitas (17.9% del revenue total), por encima de la segunda plaza por revenue (Éxito Laureles, $1,011,600) pese a tener las mismas 3 visitas. Es el punto de referencia para el resto de la cadena Olímpica.</p></div></div><div class="insight-card green"><i class="fas fa-cubes"></i><div><h5>4. Mix: Hamburguesa 41.0% y Sashimi 34.3% del Volumen</h5><p>Hamburguesa (68 und, $4.01M) y Sashimi (57 und, $1.70M) lideran. En Fase III el Sashimi era 15.2% del volumen; ahora es 34.3%, impulsado por Barranquilla (23 und) y Medellín (26 und). Filetes aporta 15 und ($0.75M), con foco en Éxito Laureles.</p></div></div><div class="insight-card amber"><i class="fas fa-exclamation-circle"></i><div><h5>5. Cubitos: 5 Unidades — Problema de Distribución, no de Demanda</h5><p>En Fase III los Cubitos eran el segundo motor (32.2% del volumen). Aquí solo suman 5 unidades (3.0%). El inventario registrado muestra Cubitos únicamente en Carulla Castillo Grande y Euro Llanogrande; en las otras 17 plazas con venta el stock fue 0 o no se cargó. Hay que confirmar si el SKU se surtió o se omitió del pedido inicial.</p></div></div><div class="insight-card purple"><i class="fas fa-flask"></i><div><h5>6. Nuevos SKUs: 21 Unidades, Palomitas al Frente</h5><p>Palomitas lidera los 4 SKUs nuevos con 9 und (concentradas en Éxito Envigado: 5), seguido de Langostinos (6), Fajitas (3) y Carnitas (3). Aún es muestra pequeña, pero es la primera vez que se miden estos SKUs en punto de venta y falta cargar precio para valorizarlos.</p></div></div><div class="insight-card "><i class="fas fa-store"></i><div><h5>7. Olímpica: la Cadena con Mejor Tracción (70 und)</h5><p>Por cadena: Olímpica 70 und / $2.71M (8 plazas, 5.8 und/visita); Éxito 49 und / $1.75M (3 plazas, 8.2 und/visita); Carulla 31 und / $1.62M (6 plazas, 3.9 und/visita); Euro 16 und / $0.49M (2 plazas, 5.3 und/visita). Olímpica también es la mejor evaluada por el shopper (9.73/10) y Carulla la menor (8.09/10).</p></div></div><div class="insight-card red"><i class="fas fa-heart-broken"></i><div><h5>8. Cartagena: Satisfacción 6.73/10 vs 9.03 Nacional</h5><p>Las 15 encuestas de Carulla Castillo Grande promedian 6.73/10, calidad 3.87/5 y precio 4.07/5, contra 9.03, 4.68 y 4.76 nacional. Los comentarios incluyen respuestas como "no me gusta el atún" y "ni me gustó", lo que sugiere un tema de perfil de shopper o de abordaje, no necesariamente de producto. Es una sola plaza: validar con más visitas antes de concluir.</p></div></div><div class="insight-card amber"><i class="fas fa-tags"></i><div><h5>9. Precio: Percepción 4.76/5, pero 21 Comentarios Piden Mejorarlo</h5><p>El 86.1% califica el precio con 5★, aunque 21 de 151 comentarios abiertos (13.9%) mencionan el precio, en su mayoría como aspecto a mejorar (STO Prado Alto y Carulla El Retiro concentran 7 de ellos). El producto se percibe rico pero premium: la fricción es de precio absoluto, no de valor.</p></div></div><div class="insight-card green"><i class="fas fa-leaf"></i><div><h5>10. Opciones Veganas Sube a 27.2% de los Motivos de Recomendación</h5><p>Motivos de recomendación: Tamaños familiares 54 (35.8%), Opciones veganas 41 (27.2%), Sabores nuevos 39 (25.8%) y Otras 17 (11.3%). En Fase III las opciones veganas eran 12.1%: el canal de supermercados premium trae un shopper más interesado en alternativas vegetales/saludables.</p></div></div><div class="insight-card "><i class="fas fa-calendar-week"></i><div><h5>11. Pico del 04-nov (43 und) Explicado por 6 Visitas, no por el Día</h5><p>El 4 y 5 de nov concentran 66 unidades (39.8%) pero también 11 de las 29 visitas. El rendimiento por visita fue 6.0 und, frente a 5.6 el resto del período. El efecto es de cobertura y no de un día de semana estructural; no hubo operación en lunes ni martes, por lo que el patrón semanal no es comparable con Fase III.</p></div></div><div class="insight-card red"><i class="fas fa-search"></i><div><h5>12. Cobertura: 3 Puntos Visitados sin Venta Registrada y 12 Plazas con una Sola Visita</h5><p>Carulla Oviedo, Euro Frontera, SAO 432 Portal De La 80 tienen ingreso de asesora pero ningún registro de venta (Carulla Oviedo además tiene 8 encuestas, lo que indica que sí hubo actividad). Además, 12 de 19 plazas con venta fueron visitadas solo una vez, por lo que no hay curva de rotación ni repetición de compra.</p></div></div></div>
+
+<div class="strategy-box">
+<h2 style="color: var(--k-cyan); margin-bottom: 50px; font-size: 2.2rem; font-weight: 800;">Estrategias de Optimización — Próximo Corte: Surtido, Frecuencia y Calidad de Data</h2>
+<div class="strat-grid"><div class="strat-item"><h6>1. Completar el Surtido de Cubitos y Validar los Quiebres</h6><p>Cubitos solo tuvo inventario en 2 plazas y vendió 5 unidades; en Fase III era el segundo SKU. Antes de la próxima ronda hay que confirmar el surtido completo del portafolio base (Hamburguesa, Cubitos, Sashimi, Filetes) en las 19 plazas y definir un stock mínimo por visita.</p></div><div class="strat-item"><h6>2. Replicar el Modelo Olímpica Barranquilla</h6><p>Barranquilla logró 6.0 und/visita y 9.73/10 de satisfacción en Olímpica. Documentar el abordaje de la asesora (Daniela Calvo, 54 und, 9 visitas) y capacitar al resto del equipo, especialmente en Bogotá y Cartagena.</p></div><div class="strat-item"><h6>3. Plan de Segunda Visita en las Plazas de Mayor Potencial</h6><p>12 de 19 plazas tuvieron una sola visita. Programar revisita en las 5 mejores por revenue (SAO 093 Cr 46, Éxito Laureles, Carulla Castillo Grande, Éxito Envigado, STO 340 San Lucas) para medir rotación real y no solo apertura.</p></div><div class="strat-item"><h6>4. Diagnóstico Express en Carulla Castillo Grande (Cartagena)</h6><p>Con 6.73/10 de satisfacción y comentarios de rechazo al atún, conviene revisar el perfil de shopper, el discurso de venta y el punto de exhibición antes de continuar la inversión. Programar 2-3 visitas adicionales en fines de semana y comparar con Carulla Palmas/Tesoro (≥9/10).</p></div><div class="strat-item"><h6>5. Cargar Precios y Costos de los 4 SKUs Nuevos</h6><p>Fajitas, Carnitas, Palomitas y Langostinos suman 21 unidades sin valorizar. Entregar la lista de precios por cadena para completar el revenue y decidir cuáles escalar; Palomitas (9 und) es la primera candidata.</p></div><div class="strat-item"><h6>6. Estrategia de Precio: Combos y Degustación Dirigida</h6><p>21 comentarios (13.9%) piden mejor precio y el SKU estrella (Hamburguesa, $58,900) es el de mayor ticket. Probar combos Hamburguesa + Sashimi, oferta por volumen en Éxito/Euro y mayor degustación en las plazas con satisfacción menor a 9 (Euro Salomón, Carulla Oviedo, Éxito Envigado).</p></div><div class="strat-item"><h6>7. Capitalizar el Interés por Opciones Veganas/Saludables</h6><p>27.2% de los encuestados recomiendan por opciones veganas (vs 12.1% en Fase III). Evaluar ampliar el discurso hacia salud/omega-3/atún natural y revisar con Trade Marketing la presencia de producto vegano en la exhibición.</p></div><div class="strat-item"><h6>8. Calidad de Data Antes del Próximo Corte</h6><p>Corregir encabezados de la hoja Encuesta (dos columnas numéricas con nombre de texto), eliminar inventarios negativos (Éxito La Colina, Carulla El Retiro, SAO 405), unificar nombres de columnas de la hoja Inventario y exigir registro de venta en toda visita. Con data limpia el siguiente reporte puede incluir quiebres e inventario consumido.</p></div></div></div>
+
+</div>
+<footer class="full-footer"><div class="footer-content">
+<div class="footer-logo">Komercial C&amp;C</div>
+<p style="font-size: 1.4rem; opacity: 0.8; margin-bottom: 60px;">Transformamos la ejecución comercial en inteligencia estratégica de mercado.</p>
+<div class="footer-services">
+<div class="f-service"><i class="fas fa-chart-line"></i><h4>Analytics &amp; Sell-Out</h4><p>Monitoreo de rotación y tickets promedio para decisiones basadas en datos financieros, no en supuestos.</p></div>
+<div class="f-service"><i class="fas fa-users-cog"></i><h4>Operación Táctica</h4><p>Personal experto con autonomía estratégica para pivotar mecánicas de abordaje directamente en el punto de venta.</p></div>
+<div class="f-service"><i class="fas fa-rocket"></i><h4>Trade Marketing</h4><p>Diseño de experiencias sensoriales disruptivas que rompen la barrera del precio y elevan el valor percibido del SKU.</p></div>
+</div>
+<div class="final-phrase">"La excelencia en el punto de venta no es una coincidencia, es el resultado de la data convertida en acción estratégica."</div>
+<p style="margin-top: 80px; font-size: 0.9rem; opacity: 0.5; letter-spacing: 3px; font-weight: 800;">ESTRATEGIA &amp; MARKETING COMERCIAL © 2026 · FASE IV — 19 PUNTOS · $6.58M</p>
+</div></footer>
+
+<script>
+Chart.register(ChartDataLabels);
+Chart.defaults.color = '#64748b';
+Chart.defaults.font.family = 'Plus Jakarta Sans';
+const noDL = { datalabels: { display: false } };
+const grid = { color: '#f1f5f9' };
+
+new Chart(document.getElementById('plazaChart'), { type: 'bar', data: {"labels": ["Éxito Laureles", "SAO 093 Cr 46", "Éxito Envigado", "Carulla Castillo Grande", "STO 340 San Lucas", "Euro Llanogrande", "STO 076 Prado Alto", "STO 059 Golf", "STO 043 Miramar", "Euro Salomon", "Carulla Country", "Carulla Tesoro", "SAO 405 Plaza De Las Americas", "STO 054 Villa Campestre Cl 3", "Éxito La Colina", "STO 100 Villa Santos", "Carulla Alhambra", "Carulla El Retiro (CAF)", "Carulla Palmas"], "datasets": [{"label": "Sashimi Corte Grueso", "data": [12, 2, 8, 0, 0, 0, 7, 5, 4, 6, 2, 0, 4, 3, 0, 2, 0, 2, 0], "backgroundColor": "#60a5fa", "borderRadius": 3}, {"label": "Cubitos Aleta Amarilla", "data": [0, 0, 0, 2, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "backgroundColor": "#94a3b8", "borderRadius": 3}, {"label": "Filetes con Ajonjolí", "data": [6, 0, 3, 2, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0], "backgroundColor": "#22d3ee", "borderRadius": 3}, {"label": "Hamburguesa Aleta Amarilla", "data": [6, 19, 2, 9, 8, 4, 0, 2, 0, 0, 4, 5, 0, 0, 4, 0, 3, 0, 2], "backgroundColor": "#0f172a", "borderRadius": 3}, {"label": "Fajitas de Atún", "data": [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], "backgroundColor": "#f59e0b", "borderRadius": 3}, {"label": "Carnitas de Atún", "data": [0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "backgroundColor": "#ef4444", "borderRadius": 3}, {"label": "Palomitas de Atún", "data": [3, 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "backgroundColor": "#7c3aed", "borderRadius": 3}, {"label": "Langostinos Finas Hierbas", "data": [0, 0, 0, 0, 0, 3, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0], "backgroundColor": "#059669", "borderRadius": 3}]},
+ options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { ...noDL, legend: { position: 'top', labels: { padding: 14, font: { weight: 'bold', size: 10 } } } },
+ scales: { x: { stacked: true, beginAtZero: true, grid, border: { display: false } }, y: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 } } } } } });
+
+new Chart(document.getElementById('cityStackedChart'), { type: 'bar', data: {"labels": ["Medellín", "Barranquilla", "Bogotá", "Cartagena"], "datasets": [{"label": "Sashimi Corte Grueso", "data": [26, 23, 8, 0], "backgroundColor": "#60a5fa", "borderRadius": 3}, {"label": "Cubitos Aleta Amarilla", "data": [3, 0, 0, 2], "backgroundColor": "#94a3b8", "borderRadius": 3}, {"label": "Filetes con Ajonjolí", "data": [9, 4, 0, 2], "backgroundColor": "#22d3ee", "borderRadius": 3}, {"label": "Hamburguesa Aleta Amarilla", "data": [27, 21, 11, 9], "backgroundColor": "#0f172a", "borderRadius": 3}, {"label": "Fajitas de Atún", "data": [0, 2, 1, 0], "backgroundColor": "#f59e0b", "borderRadius": 3}, {"label": "Carnitas de Atún", "data": [3, 0, 0, 0], "backgroundColor": "#ef4444", "borderRadius": 3}, {"label": "Palomitas de Atún", "data": [8, 1, 0, 0], "backgroundColor": "#7c3aed", "borderRadius": 3}, {"label": "Langostinos Finas Hierbas", "data": [3, 3, 0, 0], "backgroundColor": "#059669", "borderRadius": 3}]},
+ options: { responsive: true, maintainAspectRatio: false, plugins: { ...noDL, legend: { position: 'bottom', labels: { padding: 12, font: { weight: 'bold', size: 10 } } } },
+ scales: { y: { beginAtZero: true, stacked: true, grid, border: { display: false } }, x: { stacked: true, grid: { display: false } } } } });
+
+new Chart(document.getElementById('doughnutChart'), { type: 'doughnut', data: {"labels": ["Hamburguesa Aleta Amarilla (41.0%)", "Sashimi Corte Grueso (34.3%)", "Filetes con Ajonjolí (9.0%)", "Palomitas de Atún (5.4%)", "Langostinos Finas Hierbas (3.6%)", "Cubitos Aleta Amarilla (3.0%)", "Fajitas de Atún (1.8%)", "Carnitas de Atún (1.8%)"], "datasets": [{"data": [68, 57, 15, 9, 6, 5, 3, 3], "backgroundColor": ["#0f172a", "#60a5fa", "#22d3ee", "#7c3aed", "#059669", "#94a3b8", "#f59e0b", "#ef4444"], "hoverOffset": 20, "borderWidth": 0}]},
+ options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'bottom', labels: { padding: 10, font: { weight: 'bold', size: 10 } } },
+ datalabels: { color: '#fff', font: { weight: 'bold', size: 11 }, formatter: (v) => v >= 8 ? v : '' } } } });
+
+const d4 = {"labels": ["23-oct", "24-oct", "25-oct", "28-oct", "29-oct", "30-oct", "31-oct", "04-nov", "05-nov", "06-nov", "07-nov"], "u": [11, 9, 14, 11, 10, 16, 8, 43, 23, 13, 8], "vis": [1, 2, 3, 2, 2, 3, 1, 6, 5, 3, 1]};
+new Chart(document.getElementById('dailyChart'), { data: { labels: d4.labels, datasets: [
+ { type: 'line', label: 'Unidades vendidas', data: d4.u, borderColor: '#1e40af', backgroundColor: 'rgba(30,64,175,0.08)', borderWidth: 3, pointRadius: 4, pointBackgroundColor: '#1e40af', tension: 0.3, fill: true, yAxisID: 'y', order: 1 },
+ { type: 'bar', label: 'Visitas con venta', data: d4.vis, backgroundColor: 'rgba(34,211,238,0.5)', borderRadius: 6, yAxisID: 'y1', order: 2 } ] },
+ options: { responsive: true, maintainAspectRatio: false, plugins: { ...noDL, legend: { position: 'bottom' } },
+ scales: { y: { beginAtZero: true, grid, border: { display: false }, title: { display: true, text: 'Unidades' } }, y1: { beginAtZero: true, position: 'right', grid: { display: false }, title: { display: true, text: 'Visitas' }, ticks: { stepSize: 1 } }, x: { grid: { display: false } } } } });
+
+const d5 = {"labels": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"], "u": [0, 0, 54, 33, 40, 25, 14], "vis": [0, 0, 8, 7, 7, 4, 3]};
+new Chart(document.getElementById('weekdayChart'), { type: 'bar', data: { labels: d5.labels, datasets: [{ label: 'Unidades totales', data: d5.u, backgroundColor: ['#dbeafe','#bfdbfe','#0f172a','#60a5fa','#3b82f6','#1e40af','#93c5fd'], borderRadius: 12 }] },
+ options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'top', font: { weight: 'bold', size: 12 }, color: '#0f172a', formatter: (v, c) => v + ' und · ' + d5.vis[c.dataIndex] + ' vis' } },
+ scales: { y: { beginAtZero: true, grid, border: { display: false }, grace: '15%' }, x: { grid: { display: false } } } } });
+
+const d6 = {"labels": ["Calidad", "Ambiente", "Precio", "Satisfacción general (escala 5)"], "data": [4.68, 4.7, 4.76, 4.52]};
+new Chart(document.getElementById('radarChart'), { type: 'radar', data: { labels: d6.labels, datasets: [{ label: 'Percepción del Shopper', data: d6.data, borderColor: '#1e40af', backgroundColor: 'rgba(30,64,175,0.15)', borderWidth: 4, pointBackgroundColor: '#1e40af', pointRadius: 5 }] },
+ options: { responsive: true, maintainAspectRatio: false, scales: { r: { beginAtZero: true, max: 5, grid: { color: '#e2e8f0' }, angleLines: { color: '#e2e8f0' }, pointLabels: { font: { size: 12, weight: 'bold' } } } }, plugins: { legend: { display: false }, datalabels: { display: false } } } });
+
+const d7 = {"labels": ["Éxito Laureles", "SAO 093 Cr 46", "Éxito Envigado", "Carulla Castillo Grande", "STO 340 San Lucas", "Euro Llanogrande", "STO 076 Prado Alto", "STO 059 Golf", "STO 043 Miramar", "Euro Salomon", "Carulla Country", "Carulla Tesoro", "SAO 405 Plaza De Las Americas", "STO 054 Villa Campestre Cl 3", "Éxito La Colina", "STO 100 Villa Santos", "Carulla Alhambra", "Carulla El Retiro (CAF)", "Carulla Palmas"], "u": [27, 24, 18, 13, 11, 10, 9, 7, 6, 6, 6, 5, 5, 4, 4, 4, 3, 2, 2], "c": ["#1e40af", "#7c3aed", "#1e40af", "#db2777", "#1e40af", "#1e40af", "#7c3aed", "#7c3aed", "#7c3aed", "#1e40af", "#0e7490", "#1e40af", "#0e7490", "#7c3aed", "#0e7490", "#7c3aed", "#0e7490", "#0e7490", "#1e40af"]};
+new Chart(document.getElementById('plazaShareChart'), { type: 'bar', data: { labels: d7.labels, datasets: [{ label: 'Unidades totales', data: d7.u, backgroundColor: d7.c, borderRadius: 8 }] },
+ options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'end', font: { weight: 'bold', size: 10 }, color: '#0f172a', formatter: (v) => v + ' und' } },
+ scales: { x: { beginAtZero: true, grid, border: { display: false }, grace: '12%' }, y: { grid: { display: false }, ticks: { font: { size: 10 } } } } } });
+
+const d8 = {"labels": ["Medellín", "Barranquilla", "Bogotá", "Cartagena"], "r": [2888500, 2124200, 887100, 677700], "c": ["#1e40af", "#7c3aed", "#0e7490", "#db2777"]};
+new Chart(document.getElementById('revenueChart'), { type: 'bar', data: { labels: d8.labels, datasets: [{ label: 'Revenue (COP)', data: d8.r, backgroundColor: d8.c, borderRadius: 14 }] },
+ options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'top', font: { weight: 'bold', size: 12 }, color: '#0f172a', formatter: (v) => '$' + (v/1000000).toFixed(2) + 'M' } },
+ scales: { y: { beginAtZero: true, grid, border: { display: false }, grace: '12%', ticks: { callback: (v) => '$' + (v/1000000).toFixed(1) + 'M' } }, x: { grid: { display: false } } } } });
+
+const d9 = {"labels": ["Tamaños familiares (35.8%)", "Opciones veganas (27.2%)", "Sabores nuevos (25.8%)", "Otras (11.3%)"], "data": [54, 41, 39, 17]};
+new Chart(document.getElementById('motivoChart'), { type: 'doughnut', data: { labels: d9.labels, datasets: [{ data: d9.data, backgroundColor: ['#0f172a', '#1e40af', '#60a5fa', '#22d3ee'], hoverOffset: 15, borderWidth: 0 }] },
+ options: { responsive: true, maintainAspectRatio: false, cutout: '55%', plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { weight: 'bold', size: 10 } } }, datalabels: { color: '#fff', font: { weight: 'bold', size: 11 }, formatter: (v) => v } } } });
+
+const d10 = {"labels": ["Sabor / rico", "Menciona precio", "Frescura", "Tamaño / variedad", "Innovación", "Salud / nutrición", "Empaque / práctico"], "data": [61, 21, 14, 14, 10, 7, 7]};
+new Chart(document.getElementById('mejoraChart'), { type: 'bar', data: { labels: d10.labels, datasets: [{ label: 'Menciones', data: d10.data, backgroundColor: ['#1e40af','#f59e0b','#60a5fa','#34d399','#22d3ee','#059669','#9ca3af'], borderRadius: 8 }] },
+ options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'top', font: { weight: 'bold', size: 11 }, color: '#0f172a' } },
+ scales: { y: { beginAtZero: true, grid, border: { display: false }, grace: '12%' }, x: { grid: { display: false }, ticks: { font: { size: 10 } } } } } });
+</script>
+</body>
+</html>
